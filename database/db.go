@@ -13,7 +13,7 @@ var (
 	port     = 5432
 	user     = "postgres"
 	password = "postgres"
-	dbname   = "db_go_jwt_hacktiv8"
+	dbname   = "db_mygram_hacktiv8"
 	db       *gorm.DB
 	err      error
 )
@@ -26,9 +26,6 @@ func InitDB() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// Migrate the schema
-	db.Debug().AutoMigrate()
 }
 
 func GetDB() *gorm.DB {
