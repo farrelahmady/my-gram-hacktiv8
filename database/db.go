@@ -32,6 +32,7 @@ func InitDB() {
 		&models.User{},
 		&models.Photo{},
 		&models.Comment{},
+		&models.SocialMedia{},
 	)
 }
 
