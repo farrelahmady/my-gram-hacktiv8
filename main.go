@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 
+	_ "github.com/farrelahmady/my-gram-hacktiv8/docs"
+
 	"github.com/farrelahmady/my-gram-hacktiv8/database"
 	"github.com/farrelahmady/my-gram-hacktiv8/router"
 )

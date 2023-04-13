@@ -13,6 +13,17 @@ var (
 	appJson = "application/json"
 )
 
+// Login godoc
+// @Summary Login
+// @Description Login
+// @Tags User
+// @Accept  json
+// @Produce  json
+// @Param email formData string true "Email"
+// @Param password formData string true "Password"
+// @Success 200 {object} models.User
+// @Failure 401 {object} string
+// @Router /auth/login [post]
 func Login(c *gin.Context) {
 	db := database.GetDB()
 	contentType := c.Request.Header.Get("Content-Type")
@@ -53,6 +64,19 @@ func Login(c *gin.Context) {
 	})
 }
 
+// Register godoc
+// @Summary Register
+// @Description Register
+// @Tags User
+// @Accept  json
+// @Produce  json
+// @Param email formData string true "Email"
+// @Param password formData string true "Password"
+// @Param username formData string true "Username"
+// @Param age formData int true "Age"
+// @Success 200 {object} models.User
+// @Failure 400  {object}  string
+// @Router /auth/register [post]
 func Register(c *gin.Context) {
 	db := database.GetDB()
 	contentType := c.Request.Header.Get("Content-Type")

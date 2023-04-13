@@ -43,3 +43,36 @@ func PhotoAuthorization() gin.HandlerFunc {
 		}
 	}
 }
+func CommentAuthorization() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		db := database.GetDB()
+		CommentID, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error":   "Unauthorized",
+				"message": err.Error(),
+			})
+			return
+		}
+		user := c.MustGet("user").(jwt.MapClaims)
+		userId := uint(user["id"].(float64))
+		Comment := models.Comment{}
+
+		err = db.Select("user_id").First(&Comment, uint(CommentID)).Error
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error":   "Unauthorized",
+				"message": err.Error(),
+			})
+			return
+		}
+
+		if Comment.UserID != userId {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error":   "Unauthorized",
+				"message": "You are not authorized to update this Photo",
+			})
+			return
+		}
+	}
+}
