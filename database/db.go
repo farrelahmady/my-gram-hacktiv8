@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/farrelahmady/my-gram-hacktiv8/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -26,6 +27,12 @@ func InitDB() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	db.Debug().AutoMigrate(
+		&models.User{},
+		&models.Photo{},
+		&models.Comment{},
+	)
 }
 
 func GetDB() *gorm.DB {

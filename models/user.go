@@ -10,10 +10,11 @@ import (
 
 type User struct {
 	Model
-	Username string `gorm:"not null;unique" json:"username" form:"username" valid:"required~Your username is required"`
-	Email    string `gorm:"not null;unique" json:"email" form:"email" valid:"required~Your email is required,email~Invalid email format"`
-	Password string `gorm:"not null" json:"password" form:"password" valid:"required~Your password is required,minstringlength(6)~Your password must be at least 6 characters"`
-	Age      uint   `gorm:"not null" json:"age" form:"age" valid:"required~Your age is required,type(uint)~Your age must be a number,range(8|100)~Your age must be between 1 and 100"`
+	Username string  `gorm:"not null;unique" json:"username" form:"username" valid:"required~Your username is required"`
+	Email    string  `gorm:"not null;unique" json:"email" form:"email" valid:"required~Your email is required,email~Invalid email format"`
+	Password string  `gorm:"not null" json:"password" form:"password" valid:"required~Your password is required,minstringlength(6)~Your password must be at least 6 characters"`
+	Age      uint    `gorm:"not null" json:"age" form:"age" valid:"required~Your age is required,type(uint)~Your age must be a number,range(8|100)~Your age must be between 1 and 100"`
+	Photos   []Photo `gorm:constraint:OnUpdate:CASCADE,OnDelete:SET NULL; json:"photos"`
 }
 
 func (u *User) TableName() string {
