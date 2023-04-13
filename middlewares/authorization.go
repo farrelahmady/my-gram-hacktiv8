@@ -76,3 +76,37 @@ func CommentAuthorization() gin.HandlerFunc {
 		}
 	}
 }
+
+func SocialMediaAuthorization() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		db := database.GetDB()
+		SocialMediaID, err := strconv.Atoi(c.Param("id"))
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error":   "Unauthorized",
+				"message": err.Error(),
+			})
+			return
+		}
+		user := c.MustGet("user").(jwt.MapClaims)
+		userId := uint(user["id"].(float64))
+		SocialMedia := models.SocialMedia{}
+
+		err = db.Select("user_id").First(&SocialMedia, uint(SocialMediaID)).Error
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error":   "Unauthorized",
+				"message": err.Error(),
+			})
+			return
+		}
+
+		if SocialMedia.UserID != userId {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error":   "Unauthorized",
+				"message": "You are not authorized to update this Photo",
+			})
+			return
+		}
+	}
+}

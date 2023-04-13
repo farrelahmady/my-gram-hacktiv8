@@ -49,6 +49,21 @@ func StartApp() *gin.Engine {
 		commentRouter.DELETE("/:id", middlewares.CommentAuthorization(), controllers.DeleteComment)
 	}
 
+	socialMediaRouter := router.Group("/socialmedias")
+	{
+		socialMediaRouter.Use(middlewares.Auth())
+		// GetAllPhotos
+		socialMediaRouter.GET("/", controllers.GetAllSocialMedias)
+		// GetOneSocialMedia
+		socialMediaRouter.GET("/:id", middlewares.SocialMediaAuthorization(), controllers.GetSocialMedia)
+		// CreateSocialMedia
+		socialMediaRouter.POST("/", controllers.CreateSocialMedia)
+		// UpdateSocialMedia
+		socialMediaRouter.PUT("/:id", middlewares.SocialMediaAuthorization(), controllers.UpdateSocialMedia)
+		// DeleteSocialMedia
+		socialMediaRouter.DELETE("/:id", middlewares.SocialMediaAuthorization(), controllers.DeleteSocialMedia)
+	}
+
 	router.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	return router
 }

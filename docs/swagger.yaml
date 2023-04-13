@@ -9,7 +9,7 @@ definitions:
         type: string
       photo:
         $ref: '#/definitions/models.Photo'
-      photoID:
+      photo_id:
         type: integer
       updated_at:
         type: string
@@ -33,6 +33,23 @@ definitions:
       photo_url:
         type: string
       title:
+        type: string
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+      userID:
+        type: integer
+    type: object
+  models.SocialMedia:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      social_media_url:
         type: string
       updated_at:
         type: string
@@ -182,6 +199,30 @@ paths:
       tags:
       - Comments
   /comments/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a comment
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Delete a comment
+      tags:
+      - Comments
     get:
       consumes:
       - application/json
@@ -204,6 +245,36 @@ paths:
           schema:
             type: string
       summary: Get a comment
+      tags:
+      - Comments
+    put:
+      consumes:
+      - application/json
+      description: Update a comment
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Comment
+        in: body
+        name: comment
+        required: true
+        schema:
+          $ref: '#/definitions/models.Comment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Comment'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Update a comment
       tags:
       - Comments
   /photos:
@@ -349,4 +420,129 @@ paths:
       summary: Update a photo
       tags:
       - Photos
+  /socialMedias:
+    get:
+      consumes:
+      - application/json
+      description: Get all social media
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SocialMedia'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get all social media
+      tags:
+      - SocialMedias
+    post:
+      consumes:
+      - application/json
+      description: Create a social media
+      parameters:
+      - description: SocialMedia
+        in: body
+        name: socialMedia
+        required: true
+        schema:
+          $ref: '#/definitions/models.SocialMedia'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SocialMedia'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Create a social media
+      tags:
+      - SocialMedias
+  /socialMedias/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a social media
+      parameters:
+      - description: SocialMedia ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Delete a social media
+      tags:
+      - SocialMedias
+    get:
+      consumes:
+      - application/json
+      description: Get a social media
+      parameters:
+      - description: SocialMedia ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SocialMedia'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Get a social media
+      tags:
+      - SocialMedias
+    put:
+      consumes:
+      - application/json
+      description: Update a social media
+      parameters:
+      - description: SocialMedia ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: SocialMedia
+        in: body
+        name: socialMedia
+        required: true
+        schema:
+          $ref: '#/definitions/models.SocialMedia'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SocialMedia'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Update a social media
+      tags:
+      - SocialMedias
 swagger: "2.0"
